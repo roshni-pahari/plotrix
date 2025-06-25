@@ -1,0 +1,4 @@
+venv
+mdb_data 
+backend/mdb_data/
+__pycache__
