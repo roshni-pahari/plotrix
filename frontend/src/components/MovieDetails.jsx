@@ -10,7 +10,8 @@ import {
   Film,
   Heart,
   AlertCircle,
-  RotateCcw
+  RotateCcw,
+  Clapperboard
 } from 'lucide-react';
 
 const MovieDetails = ({ movie, onClose }) => {
@@ -31,7 +32,7 @@ const MovieDetails = ({ movie, onClose }) => {
       const requestBody = {
         title: movie.title,
         plot: movie.snippet,
-        genre: "Unknown", // Placeholder since we don't have genre from search results
+        genre: movie.genre, // Placeholder since we don't have genre from search results
         origin: movie.origin || 'Unknown',
         release_year: movie.release_year || 2000
       };
@@ -134,6 +135,13 @@ const MovieDetails = ({ movie, onClose }) => {
               <span className="flex items-center">
                 <Calendar className="h-4 w-4 mr-1" />
                 {movie.release_year}
+              </span>
+            )}
+
+            {movie.genre && (
+              <span className="flex items-center">
+                <Clapperboard className="h-4 w-4 mr-1" />
+                {movie.genre}
               </span>
             )}
           </div>

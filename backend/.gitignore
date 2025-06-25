@@ -2,6 +2,6 @@ venv
 mdb_data 
 backend/mdb_data/
 __pycache__
-
+.env
 #  .\venv\Scripts\Activate.ps1  
 #   uvicorn app:app --reload

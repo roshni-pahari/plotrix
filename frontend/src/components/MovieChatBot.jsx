@@ -112,7 +112,7 @@ const MovieChatBot = ({ movie, onClose }) => {
 
   const suggestedQuestions = [
     "What is the meaning of the ending?",
-    "Who are the main characters?",
+    "A famous quote from the movie? ",
     "What are the key themes?",
     "What's the significance of the title?",
     "Are there any hidden meanings or symbolism?"

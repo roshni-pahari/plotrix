@@ -9,11 +9,14 @@ import {
   Info,
   ChevronDown,
   Loader2,
-  AlertCircle
+  AlertCircle,
+  Film,
+  Clapperboard,
+  Image
 } from 'lucide-react';
+  import MovieChatBot from '../components/MovieChatBot';
+  import MovieDetails from '../components/MovieDetails';
 
-import MovieChatBot from '../components/MovieChatBot';
-import MovieDetails from '../components/MovieDetails';
 
 const MainPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -26,10 +29,12 @@ const MainPage = () => {
   const [showChatBot, setShowChatBot] = useState(false);
   const [showMovieInfo, setShowMovieInfo] = useState(false);
 
+  
+
   // Configuration
-  const API_BASE_URL = 'http://localhost:8000'; // Update this to your FastAPI server URL
+  const API_BASE_URL = 'http://localhost:8000';
   const origins = ['American', 'Bollywood', 'British', 'Japanese', 'South_Korean'];
-  const years = Array.from({ length: 25 }, (_, i) => 2000 + i);
+  const years = Array.from({ length: 18 }, (_, i) => 2000 + i);
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) return;
@@ -95,6 +100,118 @@ const MainPage = () => {
     setSelectedYear('');
     setSearchResults([]);
     setError('');
+  };
+
+  const MovieCard = ({ movie, index }) => {
+    const [imageError, setImageError] = useState(false);
+    const [imageLoading, setImageLoading] = useState(true);
+
+    return (
+      <div key={index} className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group">
+        <div className="flex flex-col lg:flex-row lg:gap-6">
+          {/* Movie Poster Section */}
+          <div className="flex-shrink-0 mb-6 lg:mb-0">
+            <div className="w-48 h-72 mx-auto lg:mx-0 bg-gray-700 rounded-lg overflow-hidden relative group-hover:shadow-2xl transition-shadow duration-300">
+              {movie.poster_url && !imageError ? (
+                <>
+                  {imageLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Loader2 className="h-8 w-8 animate-spin text-purple-400" />
+                    </div>
+                  )}
+                  <img
+                    src={movie.poster_url}
+                    alt={`${movie.title} poster`}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    onLoad={() => setImageLoading(false)}
+                    onError={() => {
+                      setImageError(true);
+                      setImageLoading(false);
+                    }}
+                    style={{ display: imageLoading ? 'none' : 'block' }}
+                  />
+                </>
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center text-gray-500">
+                  <Image className="h-16 w-16 mb-2" />
+                  <span className="text-sm text-center px-2">No poster available</span>
+                </div>
+              )}
+              
+              {/* Overlay with match percentage */}
+              <div className="absolute top-3 right-3">
+                <span className="bg-purple-500/90 backdrop-blur-sm text-white px-2 py-1 rounded-lg text-sm font-medium">
+                  {(movie.relevance * 100).toFixed(1)}% match
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Movie Information Section */}
+          <div className="flex-1 flex flex-col">
+            <div className="flex-1">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
+                <h3 className="text-2xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                  {movie.title}
+                </h3>
+              </div>
+              
+              <div className="flex flex-wrap items-center gap-4 mb-4 text-sm text-gray-400">
+                {movie.origin && (
+                  <span className="flex items-center">
+                    <Globe className="h-4 w-4 mr-1" />
+                    {movie.origin}
+                  </span>
+                )}
+                {movie.release_year && (
+                  <span className="flex items-center">
+                    <Calendar className="h-4 w-4 mr-1" />
+                    {movie.release_year}
+                  </span>
+                )}
+                {movie.genre && (
+                  <span className="flex items-center">
+                    <Clapperboard className="h-4 w-4 mr-1" />
+                    {movie.genre}
+                  </span>
+                )}
+              </div>
+              
+              {/* Movie Description/Plot */}
+              <div className="mb-6">
+                <div className="flex items-center mb-2">
+                  <Film className="h-4 w-4 text-purple-400 mr-2" />
+                  <span className="text-sm font-medium text-purple-300">Plot Summary</span>
+                </div>
+                <div className="bg-gray-700/50 rounded-lg p-4 border-l-4 border-purple-500">
+                  <p className="text-gray-200 leading-relaxed text-base">
+                    {movie.snippet || 'No plot summary available'}
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button 
+                onClick={() => handleAskAboutMovie(movie)}
+                className="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 font-medium flex-1"
+              >
+                <MessageCircle className="h-4 w-4" />
+                <span>Ask About Movie</span>
+              </button>
+              <button 
+                onClick={() => handleGetMoreInfo(movie)}
+                className="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 font-medium flex-1"
+              >
+                <Info className="h-4 w-4" />
+                <span>More Details</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -237,58 +354,9 @@ const MainPage = () => {
               </div>
             </div>
             
-            <div className="grid gap-6">
+            <div className="space-y-8">
               {searchResults.map((movie, index) => (
-                <div key={index} className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group">
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
-                    <div className="flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 mb-3">
-                        <h3 className="text-2xl font-bold text-white group-hover:text-purple-300 transition-colors">
-                          {movie.title}
-                        </h3>
-                        <span className="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-lg text-sm font-medium mt-2 sm:mt-0 w-fit">
-                          {(movie.relevance * 100).toFixed(1)}% match
-                        </span>
-                      </div>
-                      
-                      <div className="flex flex-wrap items-center gap-4 mb-4 text-sm text-gray-400">
-                        {movie.origin && (
-                          <span className="flex items-center">
-                            <Globe className="h-4 w-4 mr-1" />
-                            {movie.origin}
-                          </span>
-                        )}
-                        {movie.release_year && (
-                          <span className="flex items-center">
-                            <Calendar className="h-4 w-4 mr-1" />
-                            {movie.release_year}
-                          </span>
-                        )}
-                      </div>
-                      
-                      <p className="text-gray-300 mb-4 leading-relaxed">
-                        {movie.snippet}
-                      </p>
-                    </div>
-                    
-                    <div className="flex flex-col space-y-3 lg:ml-6 lg:flex-shrink-0">
-                      <button 
-                        onClick={() => handleAskAboutMovie(movie)}
-                        className="bg-purple-600 hover:bg-purple-700 px-4 py-3 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 font-medium"
-                      >
-                        <MessageCircle className="h-4 w-4" />
-                        <span>Ask About Movie</span>
-                      </button>
-                      <button 
-                        onClick={() => handleGetMoreInfo(movie)}
-                        className="bg-gray-700 hover:bg-gray-600 px-4 py-3 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 font-medium"
-                      >
-                        <Info className="h-4 w-4" />
-                        <span>More Details</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                <MovieCard key={index} movie={movie} index={index} />
               ))}
             </div>
           </div>
@@ -308,7 +376,7 @@ const MainPage = () => {
         )}
       </div>
 
-            {/* ChatBot Modal */}
+         {/* ChatBot Modal */}
       {showChatBot && selectedMovie && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-gray-800 rounded-2xl max-w-4xl w-full max-h-[90vh]">
