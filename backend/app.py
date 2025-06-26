@@ -80,6 +80,16 @@ async def fetch_movie_poster(title: str, year: Optional[int] = None) -> Optional
 
 # ---------------- Movie Semantic Search ----------------
 
+# some datapoints in the dataset seem to have this issue with comma and bad names so fixing the returned value with this utility function
+def clean_title(title: str) -> str:
+    if not title:
+        return ''
+    comma_index = title.find(',')
+    if comma_index != -1:
+        return f"The {title[:comma_index].strip()}"
+    return title
+
+
 class MovieSearchRequest(BaseModel):
     query: str
     origin: Optional[str] = None
@@ -120,7 +130,7 @@ async def search_movies(request: MovieSearchRequest):
             except Exception:
                 logger.warning(f"Bad metadata: {row.get('metadata')}")
             
-            title = metadata.get("title", "Unknown")
+            title = clean_title(metadata.get("title", "Unknown"))
             release_year = (int(metadata["release_year"]) if metadata.get("release_year") is not None else None)
             
             # Fetch poster URL from TMDB
