@@ -335,7 +335,7 @@ const MainPage = () => {
             <div className="space-y-8 relative z-10">
               {/* Enhanced Main Search Input */}
               <div className="relative">
-                <label className="block text-lg font-semibold mb-4 text-gray-200 flex items-center">
+                <label className=" text-lg font-semibold mb-4 text-gray-200 flex items-center">
                   <Sparkles className="h-5 w-5 mr-2 text-purple-400" />
                   Describe the movie plot, characters, or scenes
                 </label>
@@ -361,7 +361,7 @@ const MainPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Origin Filter */}
                 <div>
-                  <label className="block text-lg font-semibold mb-4 text-gray-200 flex items-center">
+                  <label className="text-lg font-semibold mb-4 text-gray-200 flex items-center">
                     <Globe className="h-5 w-5 mr-2 text-blue-400" />
                     Origin (Optional)
                   </label>
@@ -382,7 +382,7 @@ const MainPage = () => {
 
                 {/* Year Filter */}
                 <div>
-                  <label className="block text-lg font-semibold mb-4 text-gray-200 flex items-center">
+                  <label className=" text-lg font-semibold mb-4 text-gray-200 flex items-center">
                     <Calendar className="h-5 w-5 mr-2 text-green-400" />
                     Release Year (Optional)
                   </label>
@@ -462,11 +462,11 @@ const MainPage = () => {
                   <div className="w-10 h-10 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full flex items-center justify-center mr-4">
                     <Star className="h-5 w-5 text-white" />
                   </div>
-                  Search Results ({searchResults.length})
-                </h2>
-                <div className="text-lg text-gray-300 bg-gray-800/50 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-700/50">
                   Found {searchResults.length} matching movie{searchResults.length !== 1 ? 's' : ''}
-                </div>
+                </h2>
+                {/* <div className="text-lg text-gray-300 bg-gray-800/50 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-700/50">
+                  Found {searchResults.length} matching movie{searchResults.length !== 1 ? 's' : ''}
+                </div> */}
               </div>
             </div>
             

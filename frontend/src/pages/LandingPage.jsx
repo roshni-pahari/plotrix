@@ -57,11 +57,15 @@ const LandingPage = ({ onNavigateToMain, onNavigateToAbout }) => {
 
   // Enhanced movie poster rotation with smoother transitions
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentMovieIndex((prevIndex) => (prevIndex + 1) % moviePosters.length);
-    }, 2000); // Slower transition for better viewing
-    return () => clearInterval(interval);
-  }, [moviePosters.length]);
+  if (moviePosters.length === 0) return;
+
+  const intervalId = setInterval(() => {
+    setCurrentMovieIndex(prev => (prev + 1) % moviePosters.length);
+  }, 2000); // 3 seconds for better pacing, changeable
+
+  return () => clearInterval(intervalId);
+}, [moviePosters.length]);
+
 
   // Plot examples rotation
   useEffect(() => {
