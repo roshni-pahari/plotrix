@@ -7,10 +7,11 @@ import Footer from './components/Footer';
 // Import pages
 import MainPage from './pages/MainPage';
 import LandingPage from './pages/LandingPage';
+import AboutPage from './pages/AboutPage';
 
 function App() {
   // State to manage which page to show
-  const [currentPage, setCurrentPage] = useState('landing'); // 'landing' or 'main'
+  const [currentPage, setCurrentPage] = useState('landing'); // 'landing', 'main', or 'about'
 
   // Function to switch between pages
   const navigateToPage = (page) => {
@@ -22,9 +23,11 @@ function App() {
     switch (currentPage) {
       case 'main':
         return <MainPage />;
+      case 'about':
+        return <AboutPage onNavigateToMain={() => navigateToPage('main')}  onNavigateToLanding={() => navigateToPage('')}/>;
       case 'landing':
       default:
-        return <LandingPage onNavigateToMain={() => navigateToPage('main')} />;
+        return <LandingPage onNavigateToMain={() => navigateToPage('main')}  onNavigateToAbout={() => navigateToPage('about')} />;
     }
   };
 
