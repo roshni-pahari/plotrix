@@ -41,11 +41,11 @@ const LandingPage = ({ onNavigateToMain, onNavigateToAbout }) => {
   const moviePlots = [
     "A movie about dreams within dreams",
     "Teenagers trapped in a deadly game show",
-    "A man who ages backwards through time",
-    "Superhero who loses his memory and lives in reverse",
+    "people are genetically engineered to stop aging",
+    "Animated city of mammals solving a mystery",
     "Wall-E robot falls in love in space dystopia",
     "Social network created by Harvard students",
-    "Passengers wake up early on space journey"
+    "Eight-year-old boy struggles, imagines vibrant fantasy worlds."
   ];
 
   // Scroll to top and trigger animations on mount

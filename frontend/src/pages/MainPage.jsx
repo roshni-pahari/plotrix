@@ -147,7 +147,7 @@ const MainPage = () => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="bg-gradient-to-br from-gray-900 via-purple-900/50 to-gray-900 rounded-2xl p-8 border border-gray-700/50 hover:border-purple-500/50 transition-all duration-500 group hover:shadow-2xl hover:shadow-purple-500/10 relative overflow-hidden">
+        <div className="bg-gradient-to-br from-gray-900 via-purple-900/10 to-gray-900 rounded-2xl p-8 border border-gray-700/50 hover:border-purple-500/50 transition-all duration-500 group hover:shadow-2xl hover:shadow-purple-500/10 relative overflow-hidden">
           {/* Animated background */}
           <div className={`absolute inset-0 bg-gradient-to-r from-purple-600/5 to-pink-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
           
@@ -162,7 +162,7 @@ const MainPage = () => {
           <div className="relative flex flex-col lg:flex-row lg:gap-8">
             {/* Enhanced Movie Poster Section */}
             <div className="flex-shrink-0 mb-8 lg:mb-0">
-              <div className="w-56 h-80 mx-auto lg:mx-0 bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl overflow-hidden relative group-hover:shadow-2xl transition-all duration-500 transform group-hover:scale-105">
+              <div className="w-56 h-80 mx-auto lg:mx-0 bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl overflow-hidden relative group-hover:shadow-2xl transition-all duration-500 transform ">
                 {movie.poster_url && !imageError ? (
                   <>
                     {imageLoading && (
@@ -198,17 +198,17 @@ const MainPage = () => {
                 <div className="absolute top-4 right-4">
                   <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl blur-sm opacity-60"></div>
-                    <span className="relative bg-gradient-to-r from-purple-600 to-pink-600 backdrop-blur-sm text-white px-3 py-2 rounded-xl text-sm font-bold shadow-lg">
+                    <span className="relative bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-2 rounded-xl text-sm font-bold shadow-lg">
                       {(movie.relevance * 100).toFixed(1)}% match
                     </span>
                   </div>
                 </div>
 
                 {/* Hover play indicator */}
-                <div className={`absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/20 backdrop-blur-sm`}>
-                  <div className="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform duration-300 border border-white/20">
+                <div className={`absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/20 `}>
+                  {/* <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform duration-300 border border-white/20">
                     <Sparkles className="h-6 w-6 text-white animate-pulse" />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -292,7 +292,7 @@ const MainPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/10 to-gray-900 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 text-white relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute top-20 left-10 animate-bounce">
         <div className="w-4 h-4 bg-purple-400 rounded-full opacity-30 shadow-lg shadow-purple-400/50"></div>
