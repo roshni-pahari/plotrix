@@ -89,7 +89,7 @@ const LandingPage = ({ onNavigateToMain, onNavigateToAbout }) => {
     {
       icon: <Database className="h-8 w-8 text-green-400" />,
       title: "Rich Movie Database",
-      description: "Access comprehensive details including cast, box office data, ratings, and plot summaries with visual movie discovery"
+      description: "Access comprehensive details including cast, box office data, ratings, and plot summaries with added visual movie discovery option"
     },
     {
       icon: <Image className="h-8 w-8 text-pink-400" />,

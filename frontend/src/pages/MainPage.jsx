@@ -321,9 +321,9 @@ const MainPage = () => {
               Movie Match
             </span>
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          {/* <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Describe what you remember and let our advanced AI search through thousands of movies to find exactly what you're looking for
-          </p>
+          </p> */}
         </div>
 
         {/* Enhanced Search Section */}
