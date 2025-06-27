@@ -176,7 +176,7 @@ const MainPage = () => {
                     <img
                       src={movie.poster_url}
                       alt={`${movie.title} poster`}
-                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
                       onLoad={() => setImageLoading(false)}
                       onError={() => {
                         setImageError(true);
@@ -205,11 +205,11 @@ const MainPage = () => {
                 </div>
 
                 {/* Hover play indicator */}
-                <div className={`absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/20 `}>
-                  {/* <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform duration-300 border border-white/20">
+                {/* <div className={`absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/20 `}>
+                  <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform duration-300 border border-white/20">
                     <Sparkles className="h-6 w-6 text-white animate-pulse" />
-                  </div> */}
-                </div>
+                  </div>
+                </div> */}
               </div>
             </div>
 

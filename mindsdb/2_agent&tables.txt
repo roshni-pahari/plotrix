@@ -1,0 +1,96 @@
+----THIS FILE CONTAINS ALL THE CODE TO IMPLEMENT AGENTS AND AI TABLES-------
+----COPY AND PASTE EACH BLOCK AND PLACE THEM IN MINDSDB SQL EDITOR----------
+----TO EXECUTE, SELECT THAT CODE BLOCK IN THE EDITOR AND PRESS RUN-----------
+----NOTE: IT WILL ONLY RUN THE SELECTED CODE BLOCK AND IGNORE OTHERS-------- 
+
+
+
+------------------------------------------------------------
+-- Step 6: Create an Agent Bot for movie Q&A
+-- This agent responds to user questions about specific movies using a detailed prompt.
+-- Replace <your_openai_api_key> with your own valid API key.
+
+CREATE AGENT plotrix_bot
+USING
+  model = 'gpt-4o',
+  openai_api_key = '<your_openai_api_key>',
+  prompt_template = '
+You are a knowledgeable film expert who understands global cinema deeply.
+
+A user is asking about the movie titled "{{title}}" released in {{release_year}} from {{origin}}.
+
+Movie Description:
+{{plot}}
+
+User’s Question:
+"{{question}}"
+
+Respond insightfully and specifically, referencing the plot, origin, release year, genre, and cinematic context. Avoid vague or generic replies. Keep it short.
+';
+
+------------------------------------------------------------
+
+-- Optional: Drop the agent if you need to recreate or update it
+DROP AGENT IF EXISTS plotrix_bot;
+
+------------------------------------------------------------
+
+-- Example: Use the Agent to answer a question about a specific movie
+SELECT answer
+FROM plotrix_bot
+WHERE
+  title = 'Inception'
+  AND plot = 'A skilled thief who enters dreams to steal secrets but must plant an idea instead.'
+  AND origin = 'American'
+  AND release_year = 2010
+  AND question = 'What is the meaning of the ending?';
+
+------------------------------------------------------------
+
+-- Step 7: Create an AI Table Model to enrich movie metadata
+-- This model predicts detailed movie insights like director, rating, awards, etc.
+-- Replace <your_openai_api_key> with your own valid API key.
+
+CREATE MODEL movie_info
+PREDICT response
+INPUT title, plot, genre, origin, release_year
+USING
+  engine = 'openai',
+  model_name = 'gpt-4o',
+  openai_api_key = '<your_openai_api_key>',
+  prompt_template = '
+You are a cinema expert trained to infer detailed metadata from a movie’s title, genre, plot, origin, and release year.
+
+Generate the following fields exactly, one per line:
+
+director: Realistic director  
+lead_actors: 2–3 comma-separated major actors  
+box_office: Approximate global box office (e.g. "$500M worldwide")  
+imdb_rating: IMDb rating out of 10    
+awards: Comma-separated major awards or nominations (at most 3)  
+mood_tags: Exactly 5 comma-separated tone/emotion descriptors  
+similar_movies: Exactly 3 comma-separated movie titles  
+
+Title: {{title}}  
+Plot: {{plot}}  
+Genre: {{genre}}  
+Origin: {{origin}}  
+Release Year: {{release_year}}
+';
+
+------------------------------------------------------------
+
+-- Optional: Drop the model if needed
+DROP MODEL IF EXISTS movie_info;
+
+------------------------------------------------------------
+
+-- Example: Query the model to generate enriched information about a movie
+SELECT response
+FROM movie_info
+WHERE
+  title = 'Inception'
+  AND plot = 'A skilled thief who enters dreams to steal secrets but must plant an idea instead.'
+  AND genre = 'Sci-Fi, Action'
+  AND origin = 'American'
+  AND release_year = 2010;

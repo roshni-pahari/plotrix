@@ -1,0 +1,101 @@
+----THIS FILE CONTAINS ALL THE CODE TO IMPLEMENT SEMANTIC SEARCH FEATURE----
+----COPY AND PASTE EACH BLOCK AND PLACE THEM IN MINDSDB SQL EDITOR----------
+----TO EXECUTE, SELECT THE CODE BLOCK IN THE EDITOR AND PRESS RUN-----------
+----NOTE: IT WILL ONLY RUN THE SELECTED CODE BLOCK AND IGNORE OTHERS-------- 
+
+----------------------------------------------------------------
+-- Step 1: Connect a Google Sheet as a virtual database
+-- Replace `your_spreadsheet_id` and `your_sheet_name` with actual values
+CREATE DATABASE movie_sheet
+WITH ENGINE = "sheets",
+PARAMETERS = {
+  "spreadsheet_id": "<your_spreadsheet_id>",
+  "sheet_name": "<your_sheet_name>"
+};
+
+------------------------------------------------------------
+-- Optional: Preview the first few rows to verify the connection
+SELECT * FROM movie_sheet.movie_data LIMIT 50;
+
+------------------------------------------------------------
+
+-- Step 2: Create a Knowledge Base for semantic search
+-- Replace model provider or config based on your setup
+CREATE KNOWLEDGE_BASE plotrix_kb
+USING
+  embedding_model = {
+    "provider": "openai",
+    "model_name": "text-embedding-3-large",
+    "api_key": "<your_openai_api_key>"
+  },
+  -- Optionally, include a reranking model for improved results
+  -- reranking_model = {
+  --   "provider": "openai",
+  --   "model_name": "gpt-4o",
+  --   "api_key": "<your_openai_api_key>"
+  -- },
+  metadata_columns = ['origin', 'release_year', 'title', 'genre'],
+  content_columns = ['plot'],
+  id_column = 'unique_id';
+
+------------------------------------------------------------
+
+-- Optional: Delete the KB if you need to recreate it
+DROP KNOWLEDGE_BASE plotrix_kb;
+
+------------------------------------------------------------
+
+-- Step 3: Insert data into the Knowledge Base from the sheet, this may take few minutes
+INSERT INTO plotrix_kb
+SELECT unique_id, origin, release_year, title, plot, genre
+FROM movie_sheet.movie_data;
+
+------------------------------------------------------------
+
+-- Step 4: Test semantic search with optional filters
+SELECT *
+FROM plotrix_kb
+WHERE content = 'A skilled thief who enters dreams to steal secrets but must plant an idea instead.'
+  AND origin = 'American'
+  AND release_year = 2010
+LIMIT 5;
+
+------------------------------------------------------------
+
+-- Step 5: Schedule automatic syncing using a JOB
+-- This will insert new rows every 1 minute (if new IDs are added)
+CREATE JOB movie_schedule AS (
+  INSERT INTO plotrix_kb
+  SELECT unique_id, origin, release_year, title, plot, genre
+  FROM movie_sheet.movie_data
+  WHERE unique_id > <last_inserted_id>
+)
+EVERY 1 min;
+
+-- Replace <last_inserted_id> with the latest ID currently in your KB or sheets
+
+------------------------------------------------------------
+
+-- Job Management Utilities
+
+-- Drop the job if it already exists
+DROP JOB IF EXISTS movie_schedule;
+
+-- View job execution logs
+SELECT * FROM log.jobs_history WHERE name = 'movie_schedule';
+
+-- List all active jobs
+SHOW JOBS;
+
+------------------------------------------------------------
+
+-- Miscellaneous Testing Queries
+
+
+-- View latest entries in the sheet
+SELECT *
+FROM movie_sheet.movie_data
+ORDER BY unique_id DESC
+LIMIT 5;
+
+----------------------------------------------------------------

@@ -1,0 +1,64 @@
+----THIS FILE CONTAINS ALL THE CODE TO IMPLEMENT EVALUATE SYNTAX------------
+----COPY AND PASTE EACH BLOCK AND PLACE THEM IN MINDSDB SQL EDITOR----------
+----TO EXECUTE, SELECT THAT CODE BLOCK IN THE EDITOR AND PRESS RUN----------
+----NOTE: IT WILL ONLY RUN THE SELECTED CODE BLOCK AND IGNORE OTHERS-------- 
+
+
+
+
+
+-- MindsDB KB Evaluation Attempt (Not Working as Intended)
+-- This configuration tests the `EVALUATE KNOWLEDGE_BASE` syntax on a semantic knowledge base.
+-- However, the observed behavior does not match the expectations outlined in MindsDB's documentation.
+
+-- The evaluation uses a Google Sheet as a test dataset where:
+-- - `doc_id` references a target document in the knowledge base (via `unique_id`)
+-- - `question` is the natural language input used to retrieve the corresponding document
+
+-- ❗ Issue Summary:
+-- Instead of performing semantic (embedding-based) search, MindsDB seems to rank results
+-- purely based on the numerical order of `doc_id` (e.g., 1, 2, 3...).
+-- As a result:
+--   - If `doc_id` is small (typically < 100), the evaluation reports a successful hit — even when the question is gibberish or empty.
+--   - If `doc_id` is large (> 100), the evaluation fails to find it — even if the question semantically matches the document perfectly.
+--   - This indicates that semantic similarity is not being computed at all, and `doc_id` is incorrectly being used to influence ranking.
+
+-- This breaks the intended purpose of the evaluation pipeline — semantic correctness.
+-- The issue is not due to user schema or data error. It appears to be a flaw in MindsDB’s evaluation engine.
+-- A detailed bug report has been submitted to MindsDB for further investigation.
+
+------------------------------------------------------------
+-- Step 1: Create test database from Google Sheets
+-- Replace with your own spreadsheet ID and sheet name if replicating
+CREATE DATABASE eval_csv_3
+WITH ENGINE = "sheets",
+PARAMETERS = {
+  "spreadsheet_id": "<your_spreadsheet_id>",
+  "sheet_name": "eval_data"
+};
+
+-- Optional cleanup step if rerunning
+DROP DATABASE IF EXISTS eval_csv_3;
+
+------------------------------------------------------------
+-- Step 2: Execute knowledge base evaluation
+-- ✅ Expected behavior: For each question, return the top-k semantically similar documents.
+-- A hit occurs if the target `doc_id` is within the top-k semantically ranked results.
+-- ❌ Actual behavior: Results are returned in order of smallest `doc_id`, and semantic similarity is ignored.
+-- Questions with small `doc_id` always return "found in top-k", while those with large `doc_id` never do — regardless of question content.
+
+EVALUATE KNOWLEDGE_BASE plotrix_kb
+USING
+    test_table = eval_csv_3.eval_data,
+    version = 'doc_id',
+    evaluate = true,
+    llm = {
+        'provider': 'openai',
+        'api_key': '<your_openai_api_key>',
+        'model_name': 'gpt-4o'
+    };
+
+------------------------------------------------------------
+-- Optional: Manually inspect data to validate doc_id behavior
+SELECT * FROM plotrix_kb LIMIT 5;
+SELECT * FROM eval_csv_3.eval_data LIMIT 5;
