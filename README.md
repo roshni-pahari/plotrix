@@ -228,7 +228,13 @@ Plotrix fulfills all Quest 019 requirements:
 
 > ⚠️ **Note on evaluation**: The `3_evaluate_syntax.txt` script shows that `EVALUATE KNOWLEDGE_BASE version='doc_id'` currently ranks by `doc_id` rather than semantic similarity, a completely orthogonal behaviour. A detailed bug report will be submitted to MindsDB.
 
----
+## Reports associated with this project
+
+  * **Dev.to Article**: [Rediscover Movies with Plotrix](https://dev.to/roshani_pahari/rediscover-movies-with-plotrix-4c6i)
+  * **Bug Report**: [MindsDB Evaluate Knowledge Base Bug Report](https://docs.google.com/document/d/1mRj1_EhqYeedaLSQkRtZMPPZly8ZmHPRutV8xi3mMeA/edit?usp=sharing)
+  * **Semantic Search Evaluation Report**: [Plotrix Semantic Search Evaluation Report](https://docs.google.com/document/d/1fgR2YEniaPOcVCX_aj-DJkYCedqe3h1DFZg5v31iDfk/edit?usp=sharing)
+
+-----
 
 
 ## Contributing
