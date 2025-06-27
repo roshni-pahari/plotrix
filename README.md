@@ -1,37 +1,38 @@
 
 # 🎥 Plotrix
 
-![Watchers](https://img.shields.io/github/watchers/roshni-pahari/plotrix?style=social)  
-![Stars](https://img.shields.io/github/stars/roshni-pahari/plotrix?style=social)  
-![Forks](https://img.shields.io/github/forks/roshni-pahari/plotrix?style=social)  
-![Issues](https://img.shields.io/github/issues/roshni-pahari/plotrix)  
-![Pull Requests](https://img.shields.io/github/issues-pr/roshni-pahari/plotrix)  
-![License](https://img.shields.io/github/license/roshni-pahari/plotrix)
+<p align="center">
+  <a href="https://github.com/roshni-pahari/plotrix/watchers" target="_blank">
+    <img src="https://img.shields.io/github/watchers/roshni-pahari/plotrix?style=for-the-badge&logo=appveyor" alt="Watchers"/>
+  </a>
+  <a href="https://github.com/roshni-pahari/plotrix/fork" target="_blank">
+    <img src="https://img.shields.io/github/forks/roshni-pahari/plotrix?style=for-the-badge&logo=appveyor" alt="Forks"/>
+  </a>
+  <a href="https://github.com/roshni-pahari/plotrix/stargazers" target="_blank">
+    <img src="https://img.shields.io/github/stars/roshni-pahari/plotrix?style=for-the-badge&logo=appveyor" alt="Stars"/>
+  </a>
+</p>
+<p align="center">
+  <a href="https://github.com/roshni-pahari/plotrix/issues" target="_blank">
+    <img src="https://img.shields.io/github/issues/roshni-pahari/plotrix?style=for-the-badge&logo=appveyor" alt="Issues"/>
+  </a>
+  <a href="https://github.com/roshni-pahari/plotrix/pulls" target="_blank">
+    <img src="https://img.shields.io/github/issues-pr/roshni-pahari/plotrix?style=for-the-badge&logo=appveyor" alt="Pull Requests"/>
+  </a>
+</p>
+<p align="center">
+  <a href="https://github.com/roshni-pahari/plotrix/blob/main/LICENSE" target="_blank">
+    <img src="https://img.shields.io/github/license/roshni-pahari/plotrix?style=for-the-badge&logo=appveyor" alt="License"/>
+  </a>
+</p>
 
 ---
 
-## Table of Contents
 
-- [Overview](#overview)  
-- [Key Features](#key-features)  
-- [Technologies Used](#technologies-used)  
-- [Getting Started](#getting-started)  
-  - [Prerequisites](#prerequisites)  
-  - [Installation](#installation)  
-    - [Backend Setup](#backend-setup)  
-    - [Frontend Setup](#frontend-setup)  
-    - [Additional Guidance](#additional-guidance)  
-- [Demo](#demo)  
-- [Screenshots](#screenshots)  
-- [Contributing](#contributing)  
-- [License](#license)  
-- [Acknowledgments](#acknowledgments)  
-
----
 
 ## Overview
 
-Plotrix is an AI-powered web application that helps you rediscover movies based on any detail you remember—dialogue snippets, visual motifs, or even moods. It combines semantic vector search over a 7,000+ movie-plot dataset with AI-generated metadata and an interactive chatbot, all wrapped in a sleek React/Tailwind UI and powered by FastAPI and MindsDB.
+Plotrix is an AI-powered movie rediscovery platform that helps users find movies by describing vague memories—like scenes, dialogues, or plot snippets. It uses MindsDB’s semantic Knowledge Base to perform natural language search over thousands of movie plots. The app also features an interactive chatbot that answers any question regarding that movie. Additionally, AI Tables generate enriched details  like director, cast, awards and similar titles for each movie. With a sleek React frontend and FastAPI backend, Plotrix turns your fuzzy recollections into precise movie matches.
 
 ---
 
@@ -46,17 +47,15 @@ Plotrix is an AI-powered web application that helps you rediscover movies based 
 - **Interactive Q&A Bot**  
   Ask follow-up questions (“Who directed it?” “Is there a twist?”) and get instant, context-aware answers.
 
-- **Visual Discovery** (Optional)  
-  Official posters from TMDB (free for up to 1,000 requests/day) accompany each result.
+- **Visual Discovery** 
+  App also response with the amazing movie posters streamlining the discovery process.
 
 - **Advanced Filters**  
-  Filter by country (American, Bollywood, British, Japanese, South Korean), year range, genre, or rating.
+  Filter by country (American, Bollywood, British, Japanese, South Korean), release year.
 
 - **Dynamic Landing Experience**  
   Rotating poster carousel and live-updating example plots to showcase search flexibility.
 
-- **Blazing Fast Performance**  
-  Sub-100 ms response times on a local dev setup using FastAPI and MindsDB in Docker.
 
 ---
 
@@ -77,8 +76,8 @@ Plotrix is an AI-powered web application that helps you rediscover movies based 
   - Live-updating example plots  
   - Filters and modals  
 
-- **TMDB API** (optional) for poster images  
-- **OpenAI API** for MindsDB Agent (requires API key)  
+- **TMDB API** for poster images (requires API key)
+- **OpenAI API** for MindsDB (requires API key)  
 
 ---
 
@@ -101,6 +100,11 @@ Plotrix is an AI-powered web application that helps you rediscover movies based 
    git clone https://github.com/roshni-pahari/plotrix.git
    cd plotrix
    ````
+2. **Navigate to the backend directory**
+
+   ```bash
+   cd backend
+   ```
 
 2. **Create and activate a virtual environment**
 
@@ -127,23 +131,20 @@ Plotrix is an AI-powered web application that helps you rediscover movies based 
 
 4. **Prepare environment variables**
 
-   ```bash
-   cd backend
-   ```
-
    Create `backend/.env` with:
 
    ```env
   
-   TMDB_API_KEY=your_tmdb_api_key   # optional; free up to 1,000 requests/day
+   MY_API_KEY=your_tmdb_api_key 
    ```
 
    **How to get a TMDB key**:
 
    1. Visit [https://www.themoviedb.org/settings/api](https://www.themoviedb.org/settings/api)
-   2. Sign up / log in
+   2. Sign up / log in if you aren't already
    3. Create a “Developer” API key
    4. Copy it into `TMDB_API_KEY`
+   5. While the app functions without the TMDB key, it is recommended as it provides movie posters.
 
 5. **Start MindsDB & backend**
 
@@ -152,6 +153,15 @@ Plotrix is an AI-powered web application that helps you rediscover movies based 
    # docker compose down
    uvicorn app:app --reload
    ```
+
+6. open MindsDB at `http://localhost:47334`
+   * Complete MindsDB setup instructions: [`mindsdb/MINDSDB_SETUP.md`](mindsdb/MINDSDB_SETUP.md)
+  1. General working overview:
+  2.  Mindsdb scripts are present inside txt files in the mindsdb folder
+  3. Setup the data connection thorugh google sheets and make it public.
+  4. Replace the placeholders with your actual keys.( OPENAI api key, google sheets key)
+  5. Run them in the midnsdb SQL editior.
+  
 
 #### Frontend Setup
 
@@ -166,30 +176,17 @@ Plotrix is an AI-powered web application that helps you rediscover movies based 
 2. **Open in browser**
 
    ```
-   http://localhost:3000
+   http://localhost:5173
    ```
 
 ---
 
-### Additional Guidance
 
-* After `docker compose up`, open MindsDB at `http://localhost:47334`
+## 📺 Live Demo
 
-* In the MindsDB SQL editor, paste in order:
 
-  1. `mindsdb/database_setup.txt`
-  2. `mindsdb/kb_setup.txt`
-  3. `mindsdb/agent_setup.txt`
-  4. `mindsdb/ai_model_setup.txt`
-  5. *(Optional)* `mindsdb/evaluation_test.txt`
+🔗 [Watch Full Demo on Loom](https://www.loom.com/share/fd17ea7b39bd45179cc815ddaae2900e?autoplay=1)
 
-* Full MindsDB instructions: [`mindsdb/MINDSDB_SETUP.md`](mindsdb/MINDSDB_SETUP.md)
-
----
-
-## Demo
-
-[![Plotrix Demo](https://cdn.loom.com/sessions/thumbnails/fd17ea7b39bd45179cc815ddaae2900e-with-play.gif)](https://www.loom.com/share/fd17ea7b39bd45179cc815ddaae2900e?autoplay=1)
 
 ---
 

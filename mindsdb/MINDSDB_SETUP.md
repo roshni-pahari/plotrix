@@ -77,17 +77,15 @@ From the `mindsdb_setup/` folder (or wherever you've placed them):
 
 Start with:
 
-* `database_setup.txt`
-* `kb_setup.txt`
+* `1_semantic_search.txt`
 
 Then continue with:
 
-* `agent_setup.txt`
-* `ai_model.txt`
+* `2_agent&tables.txt`
 
 And finally (optional):
 
-* `evaluation_test.txt` – ⚠️ Known issue: result is **not semantic**, bug has been reported.
+* `3_evaluate_syntax.txt`
 
 ---
 
