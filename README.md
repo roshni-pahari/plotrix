@@ -42,7 +42,7 @@ Plotrix is an AI-powered movie rediscovery platform that helps users find movies
   Type any natural-language description (“robot left on a deserted planet,” “teen hackers in a dream world”) and get the four best matches.
 
 - **AI-Generated Metadata**  
-  Directors, cast, box-office, mood tags, similar titles—auto-enriched via MindsDB AI Tables.
+  Directors, cast, box-office,  similar titles—auto-enriched via MindsDB AI Tables, not present in the movie data.
 
 - **Interactive Q&A Bot**  
   Ask follow-up questions (“Who directed it?” “Is there a twist?”) and get instant, context-aware answers.
@@ -106,7 +106,7 @@ Plotrix is an AI-powered movie rediscovery platform that helps users find movies
    cd backend
    ```
 
-2. **Create and activate a virtual environment**
+3. **Create and activate a virtual environment**
 
    ```bash
    python -m venv venv
@@ -123,13 +123,13 @@ Plotrix is an AI-powered movie rediscovery platform that helps users find movies
      source venv/bin/activate
      ```
 
-3. **Install dependencies**
+4. **Install dependencies**
 
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Prepare environment variables**
+5. **Prepare environment variables**
 
    Create `backend/.env` with:
 
@@ -146,22 +146,28 @@ Plotrix is an AI-powered movie rediscovery platform that helps users find movies
    4. Copy it into `TMDB_API_KEY`
    5. While the app functions without the TMDB key, it is recommended as it provides movie posters.
 
-5. **Start MindsDB & backend**
+6. **Start MindsDB & backend**
 
    ```bash
-   docker compose up -d   # ← includes ‘docker compose down’ as comment
-   # docker compose down
+   docker compose up -d   
+   # docker compose down # if you need to close it 
    uvicorn app:app --reload
    ```
 
-6. open MindsDB at `http://localhost:47334`
-   * Complete MindsDB setup instructions: [`mindsdb/MINDSDB_SETUP.md`](mindsdb/MINDSDB_SETUP.md)
-  1. General working overview:
-  2.  Mindsdb scripts are present inside txt files in the mindsdb folder
-  3. Setup the data connection thorugh google sheets and make it public.
-  4. Replace the placeholders with your actual keys.( OPENAI api key, google sheets key)
-  5. Run them in the midnsdb SQL editior.
-  
+7. Open MindsDB at [`http://localhost:47334`](http://localhost:47334)  
+   - 📄 Complete setup instructions: [`mindsdb/MINDSDB_SETUP.md`](mindsdb/MINDSDB_SETUP.md)
+
+   **General Working Overview:**
+   1. MindsDB scripts are stored as `.txt` files inside the `mindsdb/` folder.
+   2. Set up the data connection via Google Sheets and make the sheet public.
+   3. Replace the placeholder values with your actual keys:
+      - OpenAI API key  
+      - Google Sheets ID/key
+   4. Run the scripts inside the MindsDB SQL editor.
+
+
+* ⚙️ The FastAPI backend runs at [`http://localhost:8000`](http://localhost:8000)
+* 🌐 The frontend expects this URL for API requests—make sure it's running before using the app.
 
 #### Frontend Setup
 
@@ -187,7 +193,6 @@ Plotrix is an AI-powered movie rediscovery platform that helps users find movies
 
 🔗 [Watch Full Demo on Loom](https://www.loom.com/share/fd17ea7b39bd45179cc815ddaae2900e?autoplay=1)
 
-
 ---
 
 ## Screenshots
@@ -203,6 +208,28 @@ Plotrix is an AI-powered movie rediscovery platform that helps users find movies
 ![Movie Expert Bot](https://github.com/user-attachments/assets/ee4aa111-5612-4110-b61e-7ada4fa6d3f3)
 
 ---
+
+
+## 🎯 Competition Compliance (Quest 019)
+
+Plotrix fulfills all Quest 019 requirements:
+
+| Requirement                               | Status                               |
+| ----------------------------------------- | ------------------------------------ |
+| 🔧 CREATE KNOWLEDGE\_BASE & INSERT data   | ✅ in `1_semantic_search.txt`                  |
+| 🔍 Semantic SELECT ... WHERE content LIKE | ✅ tested in SQL                      |
+| 🗂️ metadata\_columns & SQL filters       |  ✅ origin/year filters                |
+| 🕒 JOB integration                        | ✅ `CREATE JOB` in `1_semantic_search.txt`     |
+| 🤖 AI Tables & Agents                     | ✅ `2_agent&tables.txt` |
+| 📹 Demo video + this README               | ✅ video + instructions               |
+| 🐞 EVALUATE KNOWLEDGE\_BASE (not working) | ⚠️ known bug, documented             |
+| 🍒 EXTRA: CREATE AGENT (+10 pts)          | ✅ implemented                        |
+| 🍒 EXTRA: AI Table enrichment (+10 pts)   | ✅ implemented                        |
+
+> ⚠️ **Note on evaluation**: The `3_evaluate_syntax.txt` script shows that `EVALUATE KNOWLEDGE_BASE version='doc_id'` currently ranks by `doc_id` rather than semantic similarity, a completely orthogonal behaviour. A detailed bug report will be submitted to MindsDB.
+
+---
+
 
 ## Contributing
 
