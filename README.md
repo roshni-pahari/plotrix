@@ -135,7 +135,7 @@ Plotrix is an AI-powered movie rediscovery platform that helps users find movies
 
    ```env
   
-   MY_API_KEY=your_tmdb_api_key 
+   MY_API_KEY="your_tmdb_api_key" 
    ```
 
    **How to get a TMDB key**:
