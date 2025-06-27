@@ -3,10 +3,13 @@
 
 Plotrix is a **semantic movie search** and **AI-powered exploration** web app that helps you rediscover movies by describing what you remember—plot snippets, scenes, characters, or any detail. Under the hood, Plotrix uses MindsDB Knowledge Bases for vector‐based semantic search over a 7,000+ movie corpus, FastAPI for its backend API, and a React/Tailwind frontend for a snappy, modern UX.
 
-<!-- 🔗 **GitHub:** https://github.com/roshni-pahari/plotrix  
-📺 **Demo Video:** https://www.loom.com/share/fd17ea7b39bd45179cc815ddaae2900e?sid=8c578f7a-de00-40e2-86e4-2db56b12f06a   -->
 
 ---
+
+📺 **Demo Video:** [Watch on Loom](https://www.loom.com/share/fd17ea7b39bd45179cc815ddaae2900e?sid=8c578f7a-de00-40e2-86e4-2db56b12f06a)
+---
+
+
 
 ## 🌟 What Plotrix Does
 
@@ -96,7 +99,7 @@ Plotrix is a **semantic movie search** and **AI-powered exploration** web app th
    ```bash
    git clone https://github.com/roshni-pahari/plotrix.git
    cd plotrix
-````
+
 
 2. **Create & Activate Virtual Env**
 
