@@ -70,7 +70,7 @@ From the `mindsdb_setup/` folder (or wherever you've placed them):
 | Placeholder             | Replace With                                                        |
 | ----------------------- | ------------------------------------------------------------------- |
 | `<your_spreadsheet_id>` | The Google Sheet ID you copied earlier                              |
-| `<your_sheet_name>`     | Should be `movie_data` unless changed                               |
+| `<your_sheet_name>`     | Should be `movie_data` unless changed (or eval_data for the evaluation code)                              |
 | `<your_openai_api_key>` | Your [OpenAI API key](https://platform.openai.com/account/api-keys) |
 
 ### 📌 Suggested Order:

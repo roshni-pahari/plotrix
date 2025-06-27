@@ -2,7 +2,8 @@
 ----COPY AND PASTE EACH BLOCK AND PLACE THEM IN MINDSDB SQL EDITOR----------
 ----TO EXECUTE, SELECT THAT CODE BLOCK IN THE EDITOR AND PRESS RUN----------
 ----NOTE: IT WILL ONLY RUN THE SELECTED CODE BLOCK AND IGNORE OTHERS-------- 
-
+----FOR THE EVALUATION, UPLOAD THE 'eval_data.csv' IN GOOGLE SHEET----------
+----NAME IT 'eval_data', MAKE IT PUBLIC AND GET SPREADSHEET ID -------------
 
 
 
@@ -33,8 +34,8 @@
 CREATE DATABASE eval_csv_3
 WITH ENGINE = "sheets",
 PARAMETERS = {
-  "spreadsheet_id": "<your_spreadsheet_id>", ---create a new google spreadsheet and add column 'doc_id' and 'question'
-  "sheet_name": "eval_data" --replace with the name of your spreadsheet (or name your spread sheet 'eval_data')
+  "spreadsheet_id": "<your_spreadsheet_id>", ---use the sheet id of the eval_data.csv uploaded in google sheets
+  "sheet_name": "eval_data" 
 };
 
 -- Optional cleanup step if rerunning
