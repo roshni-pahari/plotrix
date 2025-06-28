@@ -41,7 +41,7 @@ Plotrix is an AI-powered movie rediscovery platform that helps users find movies
 - **Semantic Plot Search**  
   Type any natural-language description (“robot left on a deserted planet,” “teen hackers in a dream world”) and get the four best matches.
 
-- **AI-Generated Metadata**  
+- **AI-Generated Details**  
   Directors, cast, box-office,  similar titles—auto-enriched via MindsDB AI Tables, not present in the movie data.
 
 - **Interactive Q&A Bot**  
@@ -76,8 +76,8 @@ Plotrix is an AI-powered movie rediscovery platform that helps users find movies
   - Live-updating example plots  
   - Filters and modals  
 
-- **TMDB API** for poster images (requires API key)
-- **OpenAI API** for MindsDB (requires API key)  
+- **TMDB** for poster images (requires API key)
+- **OpenAI** for MindsDB (requires API key)  
 
 ---
 
@@ -197,15 +197,23 @@ Plotrix is an AI-powered movie rediscovery platform that helps users find movies
 
 ## Screenshots
 
-### Landing & Search
+### Landing Page
 
 ![Landing Page](https://github.com/user-attachments/assets/326cd499-c726-4d31-acdf-0089c2ba6810)
+![Poster Carosal](https://github.com/user-attachments/assets/f2b19825-da0a-45f8-b065-240682c88b6c)
+
+### Search Results
 ![Search Results](https://github.com/user-attachments/assets/541bcb7b-36df-41cb-88f7-5f4dbc9f5788)
 
 ### Details & Chat
 
 ![Movie Details](https://github.com/user-attachments/assets/2a377222-24a2-4027-8e07-f4aba043cbf5)
+
+### Movie expert(chatbot)
 ![Movie Expert Bot](https://github.com/user-attachments/assets/ee4aa111-5612-4110-b61e-7ada4fa6d3f3)
+
+### About Section
+![About](https://github.com/user-attachments/assets/0f5e73f0-ac63-4e18-af5d-b09f3281a5e5)
 
 ---
 
